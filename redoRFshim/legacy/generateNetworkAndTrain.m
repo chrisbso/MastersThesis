@@ -1,0 +1,33 @@
+
+sizeImgLayer = [1,size(XTrain,2),1];
+layers = [
+    imageInputLayer(sizeImgLayer,'Normalization','rescale-symmetric')
+    
+    fullyConnectedLayer(128)
+    reluLayer
+    
+    fullyConnectedLayer(128/2)
+    reluLayer
+    
+    fullyConnectedLayer(15)
+    regressionLayer];
+
+miniBatchSize  = 500;
+options = trainingOptions('sgdm', ...
+    'MiniBatchSize',miniBatchSize, ...
+    'MaxEpochs',50, ...
+    'InitialLearnRate',0.5, ...
+    'LearnRateSchedule','piecewise', ...
+    'LearnRateDropFactor',0.5, ...
+    'LearnRateDropPeriod',10, ...
+    'Shuffle','every-epoch', ...
+    'Plots','training-progress', ...
+    'Momentum',0.9, ...
+    'Verbose',false,'ExecutionEnvironment','cpu');
+
+net_joint_500nodes_1000nTrain = trainNetwork(XTrain(:,:,:,1:end/8),YTrain(1:end/8,:),layers,options);
+%predRF = predict(net,sum(sum(sum(sum(mapSet))))/numel(mapSet)*res.MTarg);
+%predRF = predRF(8:end) - 1i*[0 predRF(1:7)];
+%vars.coeffs = predRF';
+%vars.coeffs = vars.coeffs/max(abs(vars.coeffs));
+%acshim(MIDs,'meB',vars);

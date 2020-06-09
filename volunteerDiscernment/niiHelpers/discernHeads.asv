@@ -1,0 +1,21 @@
+function sameAs = retrieveHeadPairIndicies(rMat,rPercentile)
+sameAs = cell(length(rMat),2);
+x = 1:length(files);
+
+  for i = 1:length(rMat)
+    rVec = rMat(i,:);
+    sameAs{i,2} = rVec(rVec>=rPercentile);
+    sameAs{i,1} = x(rVec>=rPercentile);
+  end
+  
+  hasChecked = logical(zeros(1,length(rMat)));
+  for i = 1:length
+      if ~hasChecked(i)
+          for j = 1:length(sameAs{i,1})
+            if ~isequal(sort(sameAs{i,1}),sort(sameAs{j,1}));
+                error('You
+            end
+          end
+      end
+  end
+end
